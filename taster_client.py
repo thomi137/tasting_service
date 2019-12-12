@@ -12,5 +12,6 @@ def run() -> object:
         result = stub.getScore(tasting_note)
         print(result)
 
+
 if __name__ == '__main__':
     run()
