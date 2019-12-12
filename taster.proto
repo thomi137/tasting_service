@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service MachineTaster {
+    rpc getScore(Note) returns (Score) {}
+}
+
+message Note {
+    string note = 1;
+}
+
+message Score {
+    int32 predicted_label = 1;
+}
