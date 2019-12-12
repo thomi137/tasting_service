@@ -1,3 +1,5 @@
+import logging
+
 import taster_pb2
 import taster_pb2_grpc
 from concurrent import futures
@@ -7,7 +9,11 @@ import grpc
 
 class Taster(taster_pb2_grpc.MachineTasterServicer):
 
+    def __init__(self):
+        self._logger = logging.getLogger()
+
     def getScore(self, request, context):
+        self._logger.debug('calling with {}'.format(request.note))
         return taster_pb2.Score(predicted_label=1)
 
 

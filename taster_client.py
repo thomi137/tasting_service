@@ -11,6 +11,7 @@ def run() -> object:
 
         result = stub.getScore(tasting_note)
         print(result)
+        channel.close()
 
 
 if __name__ == '__main__':
