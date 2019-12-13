@@ -7,7 +7,7 @@ import taster_pb2_grpc
 def run() -> object:
     with grpc.insecure_channel('localhost:50051') as channel:
         stub = taster_pb2_grpc.MachineTasterStub(channel)
-        tasting_note = taster_pb2.Note(note='lala')
+        tasting_note = taster_pb2.Note(note='Perfume and aromatic lift but tart flavours')
 
         result = stub.getScore(tasting_note)
         print(result)

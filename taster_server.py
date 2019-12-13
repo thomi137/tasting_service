@@ -1,10 +1,12 @@
 import logging
+import pickle
 import grpc
+import numpy
+import sklearn
 
 import taster_pb2
 import taster_pb2_grpc
 from concurrent import futures
-
 
 
 class Taster(taster_pb2_grpc.MachineTasterServicer):
@@ -13,10 +15,14 @@ class Taster(taster_pb2_grpc.MachineTasterServicer):
         logging.basicConfig(level=logging.DEBUG,
                             format='%(asctime)s - %(levelname)s - %(message)s')
         self._logger = logging.getLogger('Taster')
+        self._clf = pickle.load(open('classifier.pkl', 'rb'))
 
     def getScore(self, request, context):
-        self._logger.info('calling with {}'.format(request.note))
-        return taster_pb2.Score(predicted_label=1)
+        self._logger.info('Calling with {}'.format(request.note))
+        note_array = []
+        note_array.append(request.note)
+        prediction = self._clf.predict(note_array)
+        return taster_pb2.Score(predicted_label=int(prediction.item(0)))
 
 
 def serve():
